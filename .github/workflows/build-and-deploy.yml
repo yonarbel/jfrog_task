@@ -88,9 +88,8 @@ jobs:
           JF_ACCESS_TOKEN: ${{ secrets.JFROG_ACCESS_TOKEN }}
 
       - name: Configure JFrog CLI
-        run: |
-          jf config add --interactive=false --url=${{ secrets.JFROG_URL }} --access-token=${{ secrets.JFROG_ACCESS_TOKEN }}
-          jf config use
+        run: jf npm-config --global=true --repo-resolve=devrel-npm --repo-deploy=devrel-npm
+
 
       - name: Install dependencies
         run: |
@@ -104,7 +103,7 @@ jobs:
       - name: Create npm package
         run: |
           npm pack
-          jf rt upload "*.tgz" npm-local/ --build-name=${{ env.BUILD_NAME }} --build-number=${{ env.BUILD_NUMBER }}
+          jf rt upload "*.tgz" devrel-npm/ --build-name=${{ env.BUILD_NAME }} --build-number=${{ env.BUILD_NUMBER }}
 
       - name: Collect build info
         run: |
@@ -123,10 +122,6 @@ jobs:
         env:
           JF_URL: ${{ secrets.JFROG_URL }}
           JF_ACCESS_TOKEN: ${{ secrets.JFROG_ACCESS_TOKEN }}
-
-      - name: Configure JFrog CLI
-        run: |
-          jf config add --interactive=false --url=${{ secrets.JFROG_URL }} --access-token=${{ secrets.JFROG_ACCESS_TOKEN }}
 
       - name: Docker login to JFrog
         run: |
