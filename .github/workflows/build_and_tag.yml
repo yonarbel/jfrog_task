@@ -1,7 +1,8 @@
 name: Build and Tag Docker Image
 
-on:
-  push:
+# Temporarily disable by commenting out the trigger
+#on:
+# push:
     branches:
       - main
       
