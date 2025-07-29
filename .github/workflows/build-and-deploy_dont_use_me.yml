@@ -1,6 +1,7 @@
 name: Build, Scan & Deploy to JFrog
 
-on:
+# Temporarily disable by commenting out the trigger
+#on:
   workflow_dispatch:
     inputs:
       environment:
